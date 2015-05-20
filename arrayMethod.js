@@ -104,6 +104,17 @@ Array.complement = function() {
     return ary;
 }
 
+
+//contains:判断数组中是否含有此元素
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] == obj) {
+            return true;
+        }
+    }
+    return false;
+}
 var a = [1, 2, 3, 4, 5];
 var b = [3, 4, 5, 6, 7];
 var c = [5, 6, 7, 8, 9];
@@ -116,3 +127,4 @@ console.log(a);
 console.log(b);
 console.log(c);
 console.log(d);
+console.log(a.contains(1));
