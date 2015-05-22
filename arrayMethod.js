@@ -115,10 +115,36 @@ Array.prototype.contains = function(obj) {
     }
     return false;
 }
+
+Array.prototype.compare = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!this[i].compare(array[i]))
+                return false;
+        }
+        else if (this[i] != array[i]) {
+            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+            return false;
+        }
+    }
+    return true;
+}
 var a = [1, 2, 3, 4, 5];
 var b = [3, 4, 5, 6, 7];
 var c = [5, 6, 7, 8, 9];
 var d = [3, 4, 5, 6, 8, 9];
+var aCopy = [1, 2, 3, 4, 5];
+
 console.log(Array.intersection(a, b, c, d)); //交集
 console.log(Array.difference(a, b, c, d)); //差集
 console.log(Array.union(a, b, c, d)); //并集
@@ -128,3 +154,5 @@ console.log(b);
 console.log(c);
 console.log(d);
 console.log(a.contains(1));
+console.log(a.compare(aCopy));
+console.log(a.compare(b));
